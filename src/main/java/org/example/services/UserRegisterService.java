@@ -1,5 +1,6 @@
 package org.example.services;
 
+import lombok.AllArgsConstructor;
 import org.example.model.AccountDto;
 import org.example.model.AccountEntity;
 import org.example.repository.AccountRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Service
+@AllArgsConstructor
 public class UserRegisterService {
 
     @Autowired
