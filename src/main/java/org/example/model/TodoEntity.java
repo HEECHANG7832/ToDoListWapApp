@@ -25,4 +25,13 @@ public class TodoEntity {
     @Column(nullable = false)
     private Boolean completed;
 
+//    @Column(nullable = false)
+//    private Boolean repeated;
+//
+//    @Column(nullable = false)
+//    private String date;
+//
+//    @Column(nullable = false)
+//    private String userid;
+
 }

@@ -26,7 +26,9 @@ public class TodoService {
         todoEntity.setTitle(request.getTitle());
         todoEntity.setOrder(request.getOrder());
         todoEntity.setCompleted(request.getCompleted());
-
+//        todoEntity.setRepeated(request.getRepeated());
+//        todoEntity.setDate(request.getDate());
+//        todoEntity.setUserid(request.getUserid());
         return this.todoRepository.save(todoEntity);
     }
 

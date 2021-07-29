@@ -38,4 +38,21 @@ public class UserRegisterService {
 
         return "success";
     }
+
+    public String loginUser(AccountDto accountDto){
+
+        String userName = accountDto.getUserName();
+        String passward = Hashing.hashingPassword(accountDto.getPassword());
+        String email = accountDto.getEmail();
+
+        if(userName.equals("") || passward.equals("") || email.equals("")){
+            return "failed";
+        }
+
+        if(accountRepository.findByUserNameAndPassword(userName, passward) != null){
+            return "failed";
+        }
+
+        return "success";
+    }
 }

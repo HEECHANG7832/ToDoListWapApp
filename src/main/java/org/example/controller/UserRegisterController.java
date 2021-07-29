@@ -25,4 +25,11 @@ public class UserRegisterController {
         System.out.println(accountdto.getUserName());
         return userRegisterService.registerUser(accountdto);
     }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody AccountDto accountdto){
+        log.info("Sign-In");
+        System.out.println(accountdto.getUserName());
+        return userRegisterService.loginUser(accountdto);
+    }
 }
