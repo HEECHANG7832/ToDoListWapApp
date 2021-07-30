@@ -17,5 +17,6 @@ public class WebServiceConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/post/**")
                 .addPathPatterns("/comment/**");
+
     }
 }

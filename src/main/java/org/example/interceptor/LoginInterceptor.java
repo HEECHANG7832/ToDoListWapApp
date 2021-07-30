@@ -1,5 +1,6 @@
 package org.example.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.tools.Sessions;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -16,6 +18,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession httpSession = request.getSession();
         String sessionItem = (String)httpSession.getAttribute(Sessions.SESSION_ID);
+
+        log.info(sessionItem);
 
         if (sessionItem == null) {
             response.getOutputStream().println("LOGIN REQUIRED!");

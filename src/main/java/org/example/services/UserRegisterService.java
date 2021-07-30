@@ -1,6 +1,7 @@
 package org.example.services;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.model.AccountDto;
 import org.example.model.AccountEntity;
 import org.example.repository.AccountRepository;
@@ -9,6 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserRegisterService {
@@ -18,17 +24,19 @@ public class UserRegisterService {
 
     public String registerUser(AccountDto accountDto){
         String userName = accountDto.getUserName();
-        String passward = Hashing.hashingPassword(accountDto.getPassword());
+        String password = Hashing.hashingPassword(accountDto.getPassword());
         String email = accountDto.getEmail();
 
-        if(userName.equals("") || passward.equals("") || email.equals("")){
+        log.info(password);
+
+        if(userName.equals("") || password.equals("") || email.equals("")){
             return "failed";
         }
 
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setUserName(userName);
         accountEntity.setEmail(email);
-        accountEntity.setPassword(passward);
+        accountEntity.setPassword(password);
 
         if(accountRepository.findByUserName(userName) != null){
             return "failed";
@@ -39,20 +47,28 @@ public class UserRegisterService {
         return "success";
     }
 
-    public String loginUser(AccountDto accountDto){
+    public Boolean loginUser(AccountDto accountDto){
 
         String userName = accountDto.getUserName();
-        String passward = Hashing.hashingPassword(accountDto.getPassword());
+        String password = Hashing.hashingPassword(accountDto.getPassword());
         String email = accountDto.getEmail();
 
-        if(userName.equals("") || passward.equals("") || email.equals("")){
-            return "failed";
+        log.info(password);
+
+        if(userName.equals("") || password.equals("") || email.equals("")){
+            return false;
         }
 
-        if(accountRepository.findByUserNameAndPassword(userName, passward) != null){
-            return "failed";
+        if(accountRepository.findByUserNameAndPassword(userName, password) == null){
+            return false;
         }
 
-        return "success";
+        return true;
+    }
+
+    public void getUserList(){
+
+        accountRepository.findAll().stream()
+                .forEach(a -> System.out.println(a.getUserName() + a.getPassword()));
     }
 }
