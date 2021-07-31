@@ -15,8 +15,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/post/**")
-                .addPathPatterns("/comment/**");
+                .addPathPatterns("/todo/**");
 
     }
 }

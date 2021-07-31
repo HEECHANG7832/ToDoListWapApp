@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class TodoEntity {
+public class TodoUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +24,14 @@ public class TodoEntity {
 
     @Column(nullable = false)
     private Boolean completed;
+
+    @Column(nullable = false)
+    private Boolean repeated;
+
+    @Column(nullable = false)
+    private String date;
+
+    @Column(nullable = false)
+    private String userid;
+
 }

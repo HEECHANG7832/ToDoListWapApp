@@ -17,11 +17,12 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession httpSession = request.getSession();
-        String sessionItem = (String)httpSession.getAttribute(Sessions.SESSION_ID);
+        String userName = (String)httpSession.getAttribute(Sessions.SESSION_ID);
 
-        log.info(sessionItem);
+        log.info(userName);
 
-        if (sessionItem == null) {
+        if (userName == null) {
+            response.setContentType("text/html");
             response.getOutputStream().println("LOGIN REQUIRED!");
             return false;
         }

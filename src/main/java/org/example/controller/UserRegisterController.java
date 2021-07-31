@@ -36,7 +36,7 @@ public class UserRegisterController {
         HttpSession session = request.getSession();
 
         if(userRegisterService.loginUser(accountdto)){
-            session.setAttribute(Sessions.SESSION_ID, accountdto);
+            session.setAttribute(Sessions.SESSION_ID, accountdto.getUserName());
             return "success";
         }else{
             session.setAttribute(Sessions.SESSION_ID, null);
