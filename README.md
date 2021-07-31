@@ -18,6 +18,10 @@ https://hospitable-timimus-365.notion.site/To-Do-List-Web-App-e5832f3ac4e54cb397
 
 - React
 
+문서화
+
+- Swagger
+
 ### 기능 리스트
 
 - User ID, Passward로 로그인 기능
@@ -28,9 +32,12 @@ https://hospitable-timimus-365.notion.site/To-Do-List-Web-App-e5832f3ac4e54cb397
 
 ### 할일
 
-- [ ] API 설계 및 DB 설계
-- [ ] AWS, MySQL 연결
-- [ ] 회원가입, 로그인 기능 구현
+- [x] API 설계 및 DB 설계
+- [x] AWS EC2 배포
+- [ ] RDS 연동
+- [x] 회원가입, 로그인 기능 구현
+- [x] 로그인 User별 ToDo 등록 기능
+- [x] Swagger 추가
 
 ### DB 설계
 
