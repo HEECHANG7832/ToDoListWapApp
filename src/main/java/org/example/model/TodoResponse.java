@@ -12,9 +12,9 @@ public class TodoResponse {
     private String title;
     private Long order;
     private Boolean completed;
-    private Boolean repeated;
-    private String date;
-    private String userid;
+//    private Boolean repeated;
+//    private String date;
+//    private String userid;
     private String url;
 
     public TodoResponse(TodoEntity todoEntity) {

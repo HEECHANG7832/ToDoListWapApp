@@ -11,7 +11,7 @@ public class TodoRequest {
     private String title;
     private Long order;
     private Boolean completed;
-    private Boolean repeated;
-    private String Date;
-    private String userid;
+//    private Boolean repeated;
+//    private String Date;
+//    private String userid;
 }

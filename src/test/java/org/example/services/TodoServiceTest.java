@@ -34,48 +34,20 @@ public class TodoServiceTest {
     @Mock
     private TodoRepository todoRepository;
 
-    @Test
-    public void test(){
-        System.out.println("test");
-
-
-        boolean answer = true;
-        String[] phone_book = {"1191", "119"};
-
-        int minLength = 99;
-        for(String iter : phone_book){
-            if(minLength > iter.length()){
-                minLength = iter.length();
-            }
-        }
-
-        for(int i = 0; i < phone_book.length; i++){
-            phone_book[i] = phone_book[i].substring(0, minLength);
-        }
-
-        HashSet<String> hashSet = (HashSet<String>) Arrays.stream(phone_book).collect(Collectors.toSet());
-
-
-        if(phone_book.length != hashSet.size()){
-            answer = false;
-        }
-
-        System.out.println(answer);
-
-    }
-
-    @Test
-    public void add() {
-        when(this.todoRepository.save(any(TodoEntity.class)))
-                .then(AdditionalAnswers.returnsFirstArg());
-
-        TodoRequest request = new TodoRequest();
-        request.setTitle("test title");
-        TodoEntity actual = this.todoService.add(request);
-
-        assertEquals(1L,  actual.getId());
-        assertEquals("test title",  actual.getTitle());
-    }
+//    @Test
+//    public void add() {
+//        when(this.todoRepository.save(any(TodoEntity.class)))
+//                .then(AdditionalAnswers.returnsFirstArg());
+//
+//        TodoRequest request = new TodoRequest();
+//        request.setTitle("test title");
+//        request.setOrder(0L);
+//        request.setCompleted(true);
+//        TodoEntity actual = this.todoService.add(request);
+//
+//        assertEquals(1L,  actual.getId());
+//        assertEquals("test title",  actual.getTitle());
+//    }
 
     @Test
     public void searchById() {

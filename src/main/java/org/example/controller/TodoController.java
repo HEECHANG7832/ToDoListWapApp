@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @AllArgsConstructor
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/")
 public class TodoController {
 
     private final TodoService todoService;
 
-    @PostMapping("/{userid}")
+    @PostMapping
     public ResponseEntity<TodoResponse> create(@RequestBody TodoRequest request) {
         log.info("CREATE");
 
