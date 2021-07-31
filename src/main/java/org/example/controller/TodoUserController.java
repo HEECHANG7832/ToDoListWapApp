@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @AllArgsConstructor
 @RestController
-@RequestMapping("/todo")
+@RequestMapping("/todo2")
 public class TodoUserController {
 
     private final TodoUserService todoUserService;
 
     @PostMapping("/{userid}")
     public ResponseEntity<TodoUserResponse> create(@PathVariable String userid, @RequestBody TodoUserRequest request) {
-        log.info("CREATE");
+        log.info("CREATE TODO userid {}", userid);
 
         if (ObjectUtils.isEmpty(request.getTitle()))
             return ResponseEntity.badRequest().build();
@@ -50,43 +50,43 @@ public class TodoUserController {
         request.setUserid(userid);
 
 
-        TodoUserEntity result = this.todoUserService.add(request);
+        TodoUserEntity result = this.todoUserService.userAdd(request);
         return ResponseEntity.ok(new TodoUserResponse(result));
     }
 
-//    @GetMapping("/{userid}")
-//    public ResponseEntity<List<TodoResponse>> readAll() {
-//        log.info("READ ALL");
-//        List<TodoEntity> result = this.todoService.searchAll();
-//        List<TodoResponse> response = result.stream().map(TodoResponse::new).collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping("/{userid}/{id}")
-//    public ResponseEntity<TodoResponse> readOne(@PathVariable Long id) {
-//        log.info("READ");
-//        TodoEntity result = this.todoService.searchById(id);
-//        return ResponseEntity.ok(new TodoResponse(result));
-//    }
-//
-//    @PatchMapping("/{userid}/{id}")
-//    public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest request) {
-//        log.info("UPDATE");
-//        TodoEntity result = this.todoService.updateById(id, request);
-//        return ResponseEntity.ok(new TodoResponse(result));
-//    }
-//
-//    @DeleteMapping("/{userid}")
-//    public ResponseEntity<?> deleteAll() {
-//        log.info("DELETE ALL");
-//        this.todoService.deleteAll();
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @DeleteMapping("/{userid}/{id}")
-//    public ResponseEntity<?> deleteOne(@PathVariable Long id) {
-//        log.info("DELETE");
-//        this.todoService.deleteById(id);
-//        return ResponseEntity.ok().build();
-//    }
+    @GetMapping("/{userid}/{id}")
+    public ResponseEntity<TodoUserResponse> readOne(@PathVariable String userid, @PathVariable Long id) {
+        log.info("userid {} id {} READ", userid, id);
+        TodoUserEntity result = this.todoUserService.searchByUseridAndId(userid, id);
+        return ResponseEntity.ok(new TodoUserResponse(result));
+    }
+
+    @GetMapping("/{userid}")
+    public ResponseEntity<List<TodoUserResponse>> readAll(@PathVariable String userid) {
+        log.info("READ ALL userid {}", userid);
+        List<TodoUserEntity> result = this.todoUserService.searchUseridAll(userid);
+        List<TodoUserResponse> response = result.stream().map(TodoUserResponse::new).collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{userid}/{id}")
+    public ResponseEntity<TodoUserResponse> update(@PathVariable String userid, @PathVariable Long id, @RequestBody TodoUserRequest request) {
+        log.info("UPDATE userid {} id {}", userid, id);
+        TodoUserEntity result = this.todoUserService.updateByUseridAndId(userid, id, request);
+        return ResponseEntity.ok(new TodoUserResponse(result));
+    }
+
+    @DeleteMapping("/{userid}")
+    public ResponseEntity<?> deleteAll(@PathVariable String userid) {
+        log.info("DELETE ALL userid {}", userid);
+        this.todoUserService.deleteUseridAll(userid);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{userid}/{id}")
+    public ResponseEntity<?> deleteOne(@PathVariable String userid, @PathVariable Long id) {
+        log.info("DELETE userid {} id {}", userid, id);
+        this.todoUserService.deleteByUseridAndId(userid, id);
+        return ResponseEntity.ok().build();
+    }
 }

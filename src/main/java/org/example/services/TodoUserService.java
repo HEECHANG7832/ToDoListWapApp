@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,11 +22,9 @@ public class TodoUserService {
     private final TodoUserRepository todoUserRepository;
 
     /**
-     * Todo 아이템 추가
-     * @param request 추가될 Todo 아이템 요청
-     * @return 추가된 Todo 엔티티
+     * Userid에 해당하는 Todo 아이템 추가
      */
-    public TodoUserEntity add(TodoUserRequest request) {
+    public TodoUserEntity userAdd(TodoUserRequest request) {
         TodoUserEntity todoUserEntity = new TodoUserEntity();
         todoUserEntity.setTitle(request.getTitle());
         todoUserEntity.setOrder(request.getOrder());
@@ -36,59 +36,65 @@ public class TodoUserService {
     }
 
     /**
-     * 특정 Todo 아이템 조회
-     * @param id 조회랑 아이템 아이디
-     * @return 조회된 Todo 엔티티
-     *          해당 아이디가 존재하지 않을 경우 ResponseStatusException 발생
+     * Userid, Id에 해당하는 Todo 아이템 조회
      */
-//    public TodoEntity searchById(Long id) {
-//        return this.todoRepository.findById(id)
-//                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
+    public TodoUserEntity searchByUseridAndId(String userid, Long id) {
+        return this.todoUserRepository.findByUseridAndId(userid, id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
     /**
-     * 전체 Todo 아이템 목록 조회
-     * @return 전체 Todo 엔티티 목록
+     * Userid 전체 Todo 아이템 목록 조회
      */
-//    public List<TodoEntity> searchAll() {
-//        return this.todoRepository.findAll();
-//    }
+    public List<TodoUserEntity> searchUseridAll(String userid) {
+        return this.todoUserRepository.findByUserid(userid);
+    }
 
     /**
-     * Todo 아이템 수정
-     * @param id 수정할 Todo 아이템 아이디
-     * @param request 수정할 내용
-     * @return 수정된 Todo 엔티티
+     * Userid, id Todo 아이템 수정
      */
-//    public TodoEntity updateById(Long id, TodoRequest request) {
-//        TodoEntity todoEntity = this.searchById(id);
-//        if (request.getTitle() != null) {
-//            todoEntity.setTitle(request.getTitle());
-//        }
-//
-//        if (request.getOrder() != null) {
-//            todoEntity.setOrder(request.getOrder());
-//        }
-//
-//        if (request.getCompleted() != null) {
-//            todoEntity.setCompleted(request.getCompleted());
-//        }
-//
-//        return this.todoRepository.save(todoEntity);
-//    }
+    public TodoUserEntity updateByUseridAndId(String userid, Long id, TodoUserRequest request) {
+        Optional<TodoUserEntity> opt = this.todoUserRepository.findByUseridAndId(userid, id);
+
+        //Userid, Id로 검색되는 내용이 없을경우 throw Exception
+        TodoUserEntity todoUserEntity = opt.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (request.getTitle() != null) {
+            todoUserEntity.setTitle(request.getTitle());
+        }
+
+        if (request.getOrder() != null) {
+            todoUserEntity.setOrder(request.getOrder());
+        }
+
+        if (request.getCompleted() != null) {
+            todoUserEntity.setCompleted(request.getCompleted());
+        }
+
+        if (request.getRepeated() != null) {
+            todoUserEntity.setRepeated(request.getRepeated());
+        }
+
+        if (request.getDate() != null) {
+            todoUserEntity.setDate(request.getDate());
+        }
+
+        return this.todoUserRepository.save(todoUserEntity);
+    }
 
     /**
-     * 특정 Todo 아이템 삭제
-     * @param id 삭제할 Todo 아이템 아이디
+     * Userid Id Todo 아이템 삭제
      */
-//    public void deleteById(Long id) {
-//        this.todoRepository.deleteById(id);
-//    }
+    @Transactional
+    public void deleteByUseridAndId(String userid, Long id) {
+        this.todoUserRepository.deleteByUseridAndId(userid, id);
+    }
 
     /**
-     * 전체 Todo 아이템 목록 삭제
+     * Userid 전체 Todo 아이템 목록 삭제
      */
-//    public void deleteAll() {
-//        this.todoRepository.deleteAll();
-//    }
+    @Transactional
+    public void deleteUseridAll(String userid) {
+        this.todoUserRepository.deleteByUserid(userid);
+    }
 }
