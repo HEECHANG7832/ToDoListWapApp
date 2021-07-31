@@ -43,4 +43,15 @@ public class UserRegisterController {
             return "failed";
         }
     }
+
+    @PostMapping("/logout")
+    public String logoutUser(@RequestBody AccountDto accountdto, HttpServletRequest request){
+        log.info("Sign-Out");
+
+        HttpSession session = request.getSession();
+
+        session.removeAttribute(Sessions.SESSION_ID);
+
+        return "log-out";
+    }
 }
