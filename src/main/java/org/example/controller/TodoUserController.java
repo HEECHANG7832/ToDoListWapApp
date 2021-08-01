@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @AllArgsConstructor
 @RestController
-@RequestMapping("/todo2")
+@RequestMapping("/todo")
 public class TodoUserController {
 
     private final TodoUserService todoUserService;
